@@ -7,6 +7,8 @@ library(bigrquery)
 
 source("./util.R", local=T)
 
+# CLIENT_ID <- "Your app's client ID"
+
 VaultPath <- "solvebio:user-1" ## Need to add vaultPath
 SolveBio_Link <- "" ## used in createSolveBio function for url to dataset
 
