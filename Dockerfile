@@ -1,6 +1,8 @@
 FROM davecap/rshiny-base:latest
 
-RUN mkdir -p /srv/shiny-server/app/packrat/lib-R
-RUN mkdir -p /srv/shiny-server/app/packrat/lib-ext
-# Install dependencies
-RUN R -e "setwd('/srv/shiny-server/app'); install.packages('packrat'); packrat::restore()"
+# RUN mkdir -p /srv/shiny-server/app/packrat/lib-R
+# RUN mkdir -p /srv/shiny-server/app/packrat/lib-ext
+# # Install dependencies
+# RUN R -e "setwd('/srv/shiny-server/app'); install.packages('packrat'); packrat::restore()"
+WORKDIR /srv/shiny-server/app/
+RUN Rscript init.R
