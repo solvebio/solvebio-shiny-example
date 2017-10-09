@@ -1,3 +1,4 @@
+require(shiny)
 # Requires:
 # install.packages("shinydashboard")
 # install.packages("tidyverse")
