@@ -19,3 +19,31 @@ Deploying a Dokku app with this buildpack results in the following error:
 
 
 Although this issue shows that some people have gotten it to work somehow: https://github.com/gliderlabs/herokuish/issues/256
+
+
+
+# Requirements
+
+Use Packrat to install requirements if running locally:
+
+    install.packages("packrat")
+    packrat::restore()
+
+
+Or install the dependencies manually:
+
+    install.packages("shinydashboard")
+    install.packages("tidyverse")
+    install.packages("shinyjs")
+    install.packages("rio")
+    install.packages("bigrquery")
+    install.packages("DT")
+    install.packages("urltools")
+    install.packages("solvebio")
+
+
+# Run
+
+To run locally:
+
+    R -e "shiny::runApp('./')"
