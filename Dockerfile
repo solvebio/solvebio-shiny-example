@@ -1,1 +1,1 @@
-FROM colebrokamp/rize:latest
+FROM davecap/rshiny-boilerplate
