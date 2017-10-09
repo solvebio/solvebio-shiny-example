@@ -1,11 +1,13 @@
 require(shiny)
 require(solvebio)
 
+# TODO: Add OAuth2 support
+solvebio::login()
+
 # Increase max file upload
 options(shiny.maxRequestSize=30*1024^2) 
 
 server <- function(input, output, session) {
-    solvebio::login()
 
     getFile<-reactive({
         inFile <- input$file2
