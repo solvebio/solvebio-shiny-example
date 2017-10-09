@@ -1,1 +1,1 @@
-FROM davecap/rshiny-boilerplate
+FROM davecap/rshiny-base
