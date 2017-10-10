@@ -1,9 +1,6 @@
 require(shiny)
 require(solvebio)
 
-# TODO: Add OAuth2 support
-# solvebio::login()
-
 # Increase max file upload
 options(shiny.maxRequestSize=30*1024^2) 
 
@@ -55,9 +52,7 @@ server <- function(input, output, session) {
                                       }
 
                                       files<-list.files(tempdir(),pattern=file_pattern)
-
                                       vault = Vault.get_by_full_path(VaultPath)
-
                                       ## set up dataset
                                       datasetName<-paste0("/",input$datasetName)
 
