@@ -33,4 +33,4 @@ Install the dependencies:
 
 To run locally:
 
-    R -e "shiny::runApp('./')"
+    R -e "shiny::runApp(getwd(), port=3838)"
