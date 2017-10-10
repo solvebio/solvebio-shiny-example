@@ -24,22 +24,9 @@ Although this issue shows that some people have gotten it to work somehow: https
 
 # Requirements
 
-Use Packrat to install requirements if running locally:
+Install the dependencies:
 
-    install.packages("packrat")
-    packrat::restore()
-
-
-Or install the dependencies manually:
-
-    install.packages("shinydashboard")
-    install.packages("tidyverse")
-    install.packages("shinyjs")
-    install.packages("rio")
-    install.packages("bigrquery")
-    install.packages("DT")
-    install.packages("urltools")
-    install.packages("solvebio")
+    Rscript init.R
 
 
 # Run
