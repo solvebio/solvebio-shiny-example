@@ -141,7 +141,7 @@ server <- function(input, output, session) {
 
                                           for(i in seq_along(files)){
                                               my_filename<-paste0(tempdir(),"/",files[i])
-                                              object <- Object.upload_file(my_filename, vault$id, '/jsonl_files/')
+                                              object <- Object.upload_file(my_filename, vault$id, '/jsonl_files/', env=env)
                                               DatasetImport.create(dataset_id = dataset$id, 
                                                                    commit_mode = 'append', 
                                                                    object_id = object$id,
