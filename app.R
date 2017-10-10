@@ -8,9 +8,6 @@ require(solvebio)
 
 source("./util.R", local=T)
 
-VaultPath <- "solvebio:user-1" ## Need to add vaultPath
-SolveBio_Link <- "" ## used in createSolveBio function for url to dataset
-
 labelMandatory <- function(label) {
   tagList(
     
@@ -68,8 +65,11 @@ server <- function(input, output, session) {
                     )
     }
 
-    app <- function(accessToken) {
-        cat("running app")
+    app <- function(access_token) {
+        env <- solvebio::createEnv(token=access_token, token_type="Bearer")
+        # TODO: Show current user
+        # user <- solvebio::User.retrieve(env=env)
+
         getFile<-reactive({
             inFile <- input$file2
             shiny::validate(
@@ -108,7 +108,7 @@ server <- function(input, output, session) {
                                           file_pattern <- paste0(my_original_name,"_")
 
                                           for(i in seq_along(chunks)){
-                                              cat(i)
+                                              # cat(i)
                                               x[i]<-bigrquery:::export_json(my_data[chunks[[i]],])
                                               y[i]<-gsub("\n$","",x[[i]])
                                               my_json_name[i]<-tempfile(pattern=file_pattern,fileext = ".json.gz")
@@ -117,12 +117,13 @@ server <- function(input, output, session) {
 
                                           files<-list.files(tempdir(),pattern=file_pattern)
 
-                                          vault = Vault.get_by_full_path(VaultPath)
+                                          # vault = Vault.get_by_full_path(VaultPath, env=env)
+                                          vault = Vault.get_personal_vault(env=env)
 
                                           ## set up dataset
                                           datasetName<-paste0("/",input$datasetName)
 
-                                          dataset_full_path = paste(vault$name, datasetName, sep=":")
+                                          dataset_full_path = paste(vault$full_path, datasetName, sep=":")
 
                                           my_pubmed=input$pmid
                                           my_url=input$url
@@ -133,7 +134,8 @@ server <- function(input, output, session) {
                                                                                                       url=my_url,
                                                                                                       pubmed_id=my_pubmed,
                                                                                                       original_file_name=my_original_name
-                                                                                                      )
+                                                                                                      ),
+                                                                                        env=env
                                                                                         )
 
 
@@ -142,7 +144,8 @@ server <- function(input, output, session) {
                                               object <- Object.upload_file(my_filename, vault$id, '/jsonl_files/')
                                               DatasetImport.create(dataset_id = dataset$id, 
                                                                    commit_mode = 'append', 
-                                                                   object_id = object$id)
+                                                                   object_id = object$id,
+                                                                   env=env)
 
                                           }
 
@@ -161,8 +164,9 @@ server <- function(input, output, session) {
 
         # Browse
         retrieveDatasets <- reactive({
-            vault = Vault.get_by_full_path(VaultPath)
-            datasets<-Vault.datasets(vault$id)
+            # vault = Vault.get_by_full_path(VaultPath, env=env)
+            vault = Vault.get_personal_vault(env=env)
+            datasets<-Vault.datasets(vault$id, env=env)
             shiny::validate(need(nrow(datasets)>0,"No datasets saved"))
             return(datasets)
         })
@@ -190,8 +194,8 @@ server <- function(input, output, session) {
             shiny::validate(
                             need(!is.null(input$datasets_summary_rows_selected),"Select dataset")
                             )
-            dataset_name<-data[s,1]
-            y<-Dataset.query(dataset_name)
+            dataset_id <- data[s,1]
+            y<-Dataset.query(dataset_id, env=env)
         })
 
         output$datasets_details = DT::renderDataTable({
@@ -210,14 +214,14 @@ server <- function(input, output, session) {
                      hash <- gsub(pattern = "#", replacement = "", x = session$clientData$url_hash)
                      hash <- parseQueryString(hash)
                      if (!hasAccessToken(hash)) {
-                         session$userData$accessToken <- NULL
+                         session$userData$access_token <- NULL
                          showModal(loginModal())
                      }
                      else {
                          # access_token, token_type, expires_in, scope
-                         session$userData$accessToken <- hash$accessToken
+                         session$userData$access_token = hash$access_token
                          shiny::updateQueryString("#", mode="replace", session)
-                         app(session$userData$accessToken)
+                         app(session$userData$access_token)
                      }
             }, once = TRUE)
 }

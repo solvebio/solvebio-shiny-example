@@ -33,4 +33,6 @@ Install the dependencies:
 
 To run locally:
 
+    export CLIENT_ID=YOUR CLIENT ID
+    export APP_URL=http://127.0.0.1:3838/
     R -e "shiny::runApp(getwd(), port=3838)"

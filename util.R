@@ -5,8 +5,7 @@ library(urltools)
 
 
 createSolveBio<-function(dataset_id){
-  before<-SolveBio_Link
-  url<-paste0(before,dataset_id)
+  url<-paste0('https://my.solvebio.com/data/', dataset_id)
   final_url<-createLink(url,label="SolveBio")
   return(final_url)
 }
