@@ -17,3 +17,11 @@ createLink <- function(url,label="") {
   return(full_link)
 }
 
+labelMandatory <- function(label) {
+    tagList(
+        
+        span("*", class = "mandatory_star"),
+        label
+    )
+}
+
