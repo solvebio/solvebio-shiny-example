@@ -1,0 +1,9 @@
+version: '2'
+services:
+  app:
+    image: davecap/shiny:0.1.0
+    environment:
+      APP_URL: http://127.0.0.1:3838
+      CLIENT_ID: YOUR_CLIENT_ID
+    ports:
+      - "3838:5000"

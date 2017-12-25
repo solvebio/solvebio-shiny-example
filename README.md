@@ -48,6 +48,11 @@ This may take a few minutes, and should automatically open up your browser to th
 
 First, [create a Heroku account](https://heroku.com). Deploying to Heroku requires a [special buildpack](https://github.com/virtualstaticvoid/heroku-buildpack-r/tree/heroku-16) that supports R and Shiny, so you'll need to create the app using the [Heroku command line tools](https://devcenter.heroku.com/articles/heroku-cli).
 
+The custom buildpack needs the following files:
+
+* `Aptfile`: contains additional system dependencies
+* `run.R`: signals to Heroku that this is an R Shiny app
+* `init.R`: install additional R dependencies
 
 First, create your app on Heroku:
 
@@ -70,3 +75,7 @@ Once your app is created, set up the following environment variables:
 Finally, deploy the app:
 
     git push heroku master
+
+
+**NOTE: The first deploy can take upwards of 20 minutes to complete.**
+
