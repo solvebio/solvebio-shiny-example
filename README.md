@@ -29,9 +29,9 @@ Now, run the Shiny app from your command-line:
 Open [http://127.0.0.1:3838](http://127.0.0.1:3838) in your browser.
 
 
-## Deploy to shinyapps.io
+## Deploy to ShinyApps.io
 
-First, [create a shinyapps account](https://www.shinyapps.io/admin/#/signup). Follow the instructions to install `rsconnect` and log in with your credentials.
+First, [create a ShinyApps account](https://www.shinyapps.io/admin/#/signup). Follow the instructions to install `rsconnect` and log in with your credentials.
 
 **Make sure you create your SolveBio app and set up your `.Renviron` file (see the section above) before deploying.**
 
@@ -42,3 +42,31 @@ To deploy, open R in the app's directory and run:
 
 
 This may take a few minutes, and should automatically open up your browser to the app URL.
+
+
+## Deploy to Heroku
+
+First, [create a Heroku account](https://heroku.com). Deploying to Heroku requires a [special buildpack](https://github.com/virtualstaticvoid/heroku-buildpack-r/tree/heroku-16) that supports R and Shiny, so you'll need to create the app using the [Heroku command line tools](https://devcenter.heroku.com/articles/heroku-cli).
+
+
+First, create your app on Heroku:
+
+    heroku create --buildpack http://github.com/virtualstaticvoid/heroku-buildpack-r.git#heroku-16
+
+
+Once your app is created, set up the following environment variables:
+
+* `CLIENT_ID`: Your SolveBio app's client ID
+* `APP_URL`: The public URL of your app (e.g. `https://<APP NAME>.herokuapp.com`)
+
+
+    # Set your SolveBio OAuth2 client ID
+    heroku config:set CLIENT_ID=<your client id>
+
+    # Set your app's public URL
+    heroku config:set APP_URL=https://<your app>.herokuapp.com
+
+
+Finally, deploy the app:
+
+    git push heroku master
