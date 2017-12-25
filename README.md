@@ -79,3 +79,7 @@ Finally, deploy the app:
 
 **NOTE: The first deploy can take upwards of 20 minutes to complete.**
 
+
+## Using Docker (not recommended)
+
+See the `docker/` directory for an example of how to run your Shiny app with Docker.
