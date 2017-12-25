@@ -7,7 +7,7 @@ library(solvebio)
 # SolveBio app credentials
 CLIENT_ID <- Sys.getenv('CLIENT_ID', unset='your SolveBio app client ID')
 # Client secret is optional
-CLIENT_SECRET <- Sys.getenv('CLIENT_SECRET', unset=NULL)
+CLIENT_SECRET <- Sys.getenv('CLIENT_SECRET', unset='')
 
 
 server <- function(input, output, session) {
