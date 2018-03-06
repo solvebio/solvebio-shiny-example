@@ -2,7 +2,9 @@
 
 This is an example R/Shiny app that requires SolveBio login via OAuth2. The app shows datasets in the current user's personal vault. This app creates a simple Shiny app wrapped by SolveBio's "protected server", requiring users to authorize the app with their SolveBio account.
 
-In order to run this app, it requires two environment variables:
+A demo version of this app is [available here](https://davecap.shinyapps.io/secure_shiny_app/) (requires SolveBio credentials).
+
+In order to run this app yourself, it requires two environment variables:
 
 * `CLIENT_ID`: The client ID of your SolveBio application.
 * `APP_URL`: The full URL (host, port, and path if necessary) of your app once it is deployed (defaults to `http://127.0.0.1:3838`).
