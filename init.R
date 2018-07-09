@@ -25,6 +25,6 @@ invisible(sapply(packages, install_if_missing))
 
 # Install custom version of solvebio-r (optional)
 
-install.packages('githubinstall', repos='http://cran.us.r-project.org')
-library(githubinstall)
-gh_install_packages('solvebio/solvebio-r', ref='master')
+# install.packages('githubinstall', repos='http://cran.us.r-project.org')
+# library(githubinstall)
+# gh_install_packages('solvebio/solvebio-r', ref='master')

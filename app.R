@@ -4,10 +4,9 @@ library(DT)
 library(tidyverse)
 library(solvebio)
 
-# SolveBio app credentials
 CLIENT_ID <- Sys.getenv('CLIENT_ID', unset='your SolveBio app client ID')
 # Client secret is optional
-CLIENT_SECRET <- Sys.getenv('CLIENT_SECRET', unset='')
+CLIENT_SECRET <- Sys.getenv('CLIENT_SECRET')
 
 
 server <- function(input, output, session) {
@@ -24,10 +23,11 @@ server <- function(input, output, session) {
     output$dataset_list = DT::renderDataTable({
         data <- retrieveDatasets()
         # Only show a few columns in the table.
-        data <- data[,c(1, 11, 3, 13, 7, 5)]
+        data <- data[,c("id", "path", "filename", "description", "dataset_documents_count", "created_at", "updated_at")]
+        # Add a link to SolveBio web
         data <- data %>%
             mutate(url = paste0('<a href="https://my.solvebio.com/data/', id, '" target="_blank">Open on SolveBio</a>')) %>%
-            select(id, path, filename, description, url, dataset_documents_count)
+            select(id, path, filename, description, url, dataset_documents_count, created_at, updated_at)
 
         DT::datatable(data,
                       selection='single',
@@ -46,8 +46,8 @@ server <- function(input, output, session) {
                         need(!is.null(input$dataset_list_rows_selected),
                              "Select a dataset")
                         )
-        dataset_id <- data[s,1]
-        y <- Dataset.query(dataset_id, env=env)
+        dataset_id <- data[s,c("id")]
+        Dataset.query(dataset_id, limit=100, env=env)
     })
 
     output$dataset_preview = DT::renderDataTable({
