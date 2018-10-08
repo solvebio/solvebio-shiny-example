@@ -66,6 +66,11 @@ ui <- dashboardPage(
                     dashboardSidebar(disable=TRUE),
                     dashboardBody(
                                   fluidPage(
+                                            # Add token cookie support
+                                            shiny::tags$head(shiny::tags$script(src = "https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.js")),
+                                            useShinyjs(),
+                                            extendShinyjs(text = solvebio::protectedServerJS(), functions = c("enableCookieAuth", "getCookie", "setCookie", "rmCookie")),
+
                                             fluidRow(
                                                      box(width = 12, title = "Datasets in your personal vault ",
                                                          DT::dataTableOutput('dataset_list')
